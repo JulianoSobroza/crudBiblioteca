@@ -1,11 +1,14 @@
 package utils;
 
 import models.Aluno;
+import models.Emprestimo;
 import models.Livro;
 import models.Bibliotecario;
 
 import java.io.*;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CsvUtil {
@@ -51,6 +54,47 @@ public class CsvUtil {
         return bibliotecarios;
     }
 
+    public static List<Emprestimo> lerEmprestimos(String caminho) {
+        List<Emprestimo> emprestimos = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(";");
+                emprestimos.add(new Emprestimo(dados[0], dados[1], dados[2], dados[3]));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return emprestimos;
+    }
+
+    public static void salvarEmprestimos(String caminho, List<Emprestimo> emprestimos) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminho))) {
+            for (Emprestimo emprestimo : emprestimos) {
+                bw.write(emprestimo.toCsvString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+/*
+    public static void salvarEmprestimos(String caminhoArquivo, List<Emprestimo> emprestimos) {
+        try (FileWriter writer = new FileWriter(caminhoArquivo)) {
+            for (Emprestimo emprestimo : emprestimos) {
+                writer.append(emprestimo.toCsvString());
+                writer.append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+ */
+
     public static void adicionarLivro (String caminho, List<Livro> livros) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminho))) {
             for ( Livro livro : livros) {
@@ -77,4 +121,5 @@ public class CsvUtil {
     }
 
     public static void removerAluno(String caminhoArquivo, List<Aluno>alunos) {} // IMPLEMENTAR
+
 }

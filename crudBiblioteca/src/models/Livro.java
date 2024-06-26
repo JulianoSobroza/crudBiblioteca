@@ -8,6 +8,15 @@ public class Livro {
     private int quantidade;
     private boolean disponibilidade;
 
+    public Livro(String nome) {
+        this.id = ""; // ou inicialize conforme necessário
+        this.nome = nome;
+        this.autor = "";
+        this.lancamento = "";
+        this.quantidade = 0;
+        this.disponibilidade = false;
+    }
+
     public Livro(String id, String nome, String autor, String lancamento, int quantidade) {
         this.id = id;
         this.nome = nome;
@@ -16,6 +25,8 @@ public class Livro {
         this.quantidade = quantidade;
         this.disponibilidade = quantidade > 0;
     }
+
+
 
     @Override
     public String toString() {
@@ -27,6 +38,18 @@ public class Livro {
                 ", quantidade=" + quantidade +
                 ", disponibilidade=" + disponibilidade +
                 '}';
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public boolean isDisponibilidade() {
+        return disponibilidade;
+    }
+
+    public void setDisponibilidade(boolean disponibilidade) {
+        this.disponibilidade = disponibilidade;
     }
 
     public String getId() {

@@ -1,16 +1,27 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Aluno {
     private final String nome;
     private final String matricula;
     private String senha;
     private double debito;
+    private List<Livro> livrosEmprestados;
 
-    public Aluno(String matricula, String nome, String senha, double debito) {
-        this.matricula = matricula;
+    public Aluno(String nome, String matricula, String senha, double debito) {
         this.nome = nome;
+        this.matricula = matricula;
         this.senha = senha;
         this.debito = debito;
+        this.livrosEmprestados = new ArrayList<>();
+    }
+
+    public Aluno(String nome) {
+        this.nome = nome;
+        this.matricula = ""; // ou inicialize conforme necessário
+        this.livrosEmprestados = new ArrayList<>();
     }
 
     @Override
@@ -53,5 +64,17 @@ public class Aluno {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public void emprestarLivro(Livro livro) {
+        livrosEmprestados.add(livro);
+    }
+
+    public void devolverLivro(Livro livro) {
+        livrosEmprestados.remove(livro);
+    }
+
+    public List<Livro> getLivros() {
+        return livrosEmprestados;
     }
 }
